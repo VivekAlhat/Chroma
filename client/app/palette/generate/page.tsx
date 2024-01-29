@@ -2,15 +2,17 @@
 
 import axios from "axios";
 import Image from "next/image";
-
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { MagicSpinner } from "react-spinners-kit";
 import { MoveLeft } from "lucide-react";
+
 import Palette from "@/components/Palette";
 
 export default function Page() {
   const [palette, setPalette] = useState<Palette[] | null>(null);
   const [uploads, setUploads] = useState<File[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setUploads(acceptedFiles);
@@ -29,6 +31,7 @@ export default function Page() {
 
   const handleCreatePalette = async (acceptedFiles: File[]) => {
     try {
+      setIsLoading(true);
       const payload = new FormData();
       payload.append("image", acceptedFiles[0]);
 
@@ -43,8 +46,11 @@ export default function Page() {
       );
 
       setPalette(response.data);
+      setIsLoading(false);
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +59,12 @@ export default function Page() {
     setUploads(null);
   };
 
-  return (
+  return isLoading ? (
+    <div className="h-[500px] flex flex-col items-center justify-center gap-4">
+      <MagicSpinner />
+      <p className="text-lg">Generating Palettes</p>
+    </div>
+  ) : (
     <section className="mt-12">
       {palette ? (
         <div className="space-y-4">
@@ -84,7 +95,7 @@ export default function Page() {
           <p>Upload image(s) below to start creating color palettes.</p>
           <div
             {...getRootProps()}
-            className="bg-secondary rounded-md border border-dashed border-gray-400 p-8 flex items-center justify-center text-center cursor-pointer h-[200px]"
+            className="bg-secondary rounded-md border border-dashed border-gray-400 p-8 flex items-center justify-center text-center cursor-pointer h-[400px]"
           >
             <input {...getInputProps()} />
             {isDragActive ? (

@@ -9,10 +9,9 @@ export default function Header() {
       >
         Chroma
       </Link>
-      <div className="flex items-center gap-6 invisible md:visible">
-        <p className="cursor-pointer hover:underline">Privacy Policy</p>
-        <p className="cursor-pointer hover:underline">About</p>
-      </div>
+      <p className="cursor-pointer hover:underline bg-violet-600 text-gray-200 px-2 rounded-full">
+        About
+      </p>
     </nav>
   );
 }

@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <section>
-      <div className="max-w-2xl my-12 mx-auto flex flex-col text-center items-center gap-6">
+      <div className="max-w-2xl my-12 mb-8 mx-auto flex flex-col text-center items-center gap-6">
         <p className="text-5xl md:text-6xl tracking-normal font-black text-gray-300">
           Turn Pictures into
           <br />
@@ -29,14 +29,20 @@ export default function Home() {
       </div>
       <div className="border border-dashed border-gray-500 rounded-md p-1 relative">
         <Arrow />
-        <Image
-          src="/example.png"
-          alt="preview"
-          width={3000}
-          height={3000}
-          className="w-full md:h-[450px] object-cover rounded-md"
-          priority
-        />
+        <div
+          style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}
+        >
+          <iframe
+            src="https://www.loom.com/embed/27cb3b52ab794cecb3691ab167bc8d8c?sid=f07d8fde-4fbb-490b-8acb-a61c897561f2"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          ></iframe>
+        </div>
       </div>
     </section>
   );
