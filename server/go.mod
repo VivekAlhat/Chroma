@@ -1,4 +1,4 @@
-module github.com/VivekAlhat/Chroma
+module github.com/VivekAlhat/Chroma/server
 
 go 1.21.5
 

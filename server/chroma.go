@@ -6,8 +6,8 @@ import (
 	"os"
 	"sort"
 
-	"github.com/VivekAlhat/Chroma/helpers"
-	"github.com/VivekAlhat/Chroma/kmeans"
+	"github.com/VivekAlhat/Chroma/server/helpers"
+	"github.com/VivekAlhat/Chroma/server/kmeans"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )

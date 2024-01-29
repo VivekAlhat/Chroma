@@ -7,7 +7,7 @@ import (
 	_ "image/png"
 	"os"
 
-	"github.com/VivekAlhat/Chroma/kmeans"
+	"github.com/VivekAlhat/Chroma/server/kmeans"
 	"github.com/nfnt/resize"
 )
 
