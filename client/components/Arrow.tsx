@@ -1,4 +1,4 @@
-const Arrow = () => {
+export default function Arrow() {
   return (
     <svg
       viewBox="0 0 246 287"
@@ -19,6 +19,4 @@ const Arrow = () => {
       </defs>
     </svg>
   );
-};
-
-export default Arrow;
+}

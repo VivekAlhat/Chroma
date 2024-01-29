@@ -1,16 +1,22 @@
 "use client";
 
 import axios from "axios";
-import { MoveLeft } from "lucide-react";
+import Image from "next/image";
+
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { MoveLeft } from "lucide-react";
+import Palette from "@/components/Palette";
 
 export default function Page() {
   const [palette, setPalette] = useState<Palette[] | null>(null);
+  const [uploads, setUploads] = useState<File[] | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    setUploads(acceptedFiles);
     handleCreatePalette(acceptedFiles);
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -42,41 +48,51 @@ export default function Page() {
     }
   };
 
+  const clear = () => {
+    setPalette(null);
+    setUploads(null);
+  };
+
   return (
     <section className="mt-12">
       {palette ? (
-        <div>
+        <div className="space-y-4">
           <button
             className="bg-gray-600 px-4 py-2 rounded-md flex items-center gap-3"
-            onClick={() => setPalette(null)}
+            onClick={() => {
+              clear();
+            }}
           >
             <MoveLeft />
-            Start over
+            Try with different images
           </button>
-          <div className="flex h-[50px] mt-4 w-full">
-            {palette.map((color, id) => (
-              <div
-                key={id}
-                className={`flex items-center justify-center text-white flex-auto cursor-pointer`}
-                style={{
-                  backgroundColor: `rgb(${color.rgb.R},${color.rgb.G},${color.rgb.B})`,
-                  width: `${color.percentage}%`,
-                }}
-              ></div>
-            ))}
+          <p>Click on any color to view more details.</p>
+          <div className="bg-secondary rounded-md">
+            <Image
+              src={URL.createObjectURL(uploads![0])}
+              alt="preview"
+              width={0}
+              height={0}
+              className="w-full h-[200px] md:h-[300px] object-cover rounded-t-md"
+              priority
+            />
+            <Palette palette={palette} />
           </div>
         </div>
       ) : (
-        <div
-          {...getRootProps()}
-          className="border border-dashed border-gray-400 p-8 flex items-center justify-center text-center cursor-pointer h-[200px]"
-        >
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the images here ...</p>
-          ) : (
-            <p>Drag & drop some images here, or click to select</p>
-          )}
+        <div className="space-y-4">
+          <p>Upload image(s) below to start creating color palettes.</p>
+          <div
+            {...getRootProps()}
+            className="bg-secondary rounded-md border border-dashed border-gray-400 p-8 flex items-center justify-center text-center cursor-pointer h-[200px]"
+          >
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p>Drop the image(s) here ...</p>
+            ) : (
+              <p>Drag & drop some image(s) here, or click to select</p>
+            )}
+          </div>
         </div>
       )}
     </section>
