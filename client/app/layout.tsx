@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`container max-w-4xl mx-auto p-4 min-h-screen bg-main text-white ${outfit.className}`}
+        className={`container max-w-4xl mx-auto min-h-screen p-8 bg-main text-white ${outfit.className}`}
       >
         <Header />
         {children}
