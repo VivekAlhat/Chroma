@@ -9,9 +9,12 @@ export default function Header() {
       >
         Chroma
       </Link>
-      <p className="cursor-pointer hover:underline bg-violet-600 text-gray-200 px-2 rounded-full">
-        About
-      </p>
+      <Link
+        href="/palette/generate"
+        className="cursor-pointer hover:underline bg-violet-700 hover:bg-violet-800 text-gray-200 px-4 py-1 rounded-full"
+      >
+        Try Now
+      </Link>
     </nav>
   );
 }

@@ -5,10 +5,10 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
-import { MagicSpinner } from "react-spinners-kit";
 import { MoveLeft } from "lucide-react";
 
 import Palette from "@/components/Palette";
+import Spinner from "@/components/Spinner";
 import { getBlobByName } from "@/lib/helpers";
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
@@ -58,7 +58,7 @@ export default function Page() {
       setPalettes(response.data);
       setIsLoading(false);
     } catch (e) {
-      console.error(e);
+      toast.error((e as Error).message);
     } finally {
       setIsLoading(false);
     }
@@ -70,10 +70,7 @@ export default function Page() {
   };
 
   return isLoading ? (
-    <div className="h-[500px] flex flex-col items-center justify-center gap-4">
-      <MagicSpinner />
-      <p className="text-lg">Generating Palettes</p>
-    </div>
+    <Spinner />
   ) : (
     <section className="mt-12">
       {palettes && palettes.length > 0 ? (
