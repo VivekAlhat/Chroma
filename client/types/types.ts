@@ -10,10 +10,15 @@ type Palette = {
   percentage: number;
 };
 
-type ColorInfoProps = {
-  color: Palette;
-};
-
-type PaletteProps = {
+type ColorPalette = {
+  name: string;
   palette: Palette[];
 };
+
+interface ColorInfoProps {
+  color: Palette;
+}
+
+interface PaletteProps {
+  palette: Palette[];
+}

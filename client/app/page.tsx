@@ -33,7 +33,7 @@ export default function Home() {
           style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}
         >
           <iframe
-            src="https://www.loom.com/embed/27cb3b52ab794cecb3691ab167bc8d8c?sid=f07d8fde-4fbb-490b-8acb-a61c897561f2"
+            src="https://www.loom.com/embed/301dcc010d0943bbadcc2947e9b1229e?sid=b28a8c28-5006-4d1d-aa88-73749223d266"
             style={{
               position: "absolute",
               top: 0,
