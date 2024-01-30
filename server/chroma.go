@@ -21,9 +21,14 @@ type Color struct {
 	Percentage int          `json:"percentage"`
 }
 
+type Palette struct {
+	Name    string  `json:"name"`
+	Palette []Color `json:"palette"`
+}
+
 func main() {
 	app := fiber.New(fiber.Config{
-		BodyLimit: 10 * 1024 * 1024,
+		BodyLimit: 20 * 1024 * 1024,
 	})
 	app.Use(cors.New())
 
@@ -33,45 +38,53 @@ func main() {
 	})
 
 	app.Post("/upload", func(c *fiber.Ctx) error {
-		file, err := c.FormFile("image")
+		form, err := c.MultipartForm()
 		if err != nil {
 			return err
 		}
 
-		destination := fmt.Sprintf("./tmp/%s", file.Filename)
-		if err := c.SaveFile(file, destination); err != nil {
-			return err
+		var palettes []Palette
+		for _, headers := range form.File {
+			for _, file := range headers {
+				colors := make([]Color, 0)
+
+				destination := fmt.Sprintf("./tmp/%s", file.Filename)
+				if err := c.SaveFile(file, destination); err != nil {
+					return err
+				}
+
+				img, err := helpers.LoadImage(destination)
+				if err != nil {
+					return err
+				}
+
+				resized := helpers.ResizeImage(img, 100)
+				points := helpers.ExtractColors(resized)
+
+				clusters := kmeans.KMeans(points, K, MAX_ITERATIONS)
+
+				for i := range clusters {
+					percentage := helpers.CalculatePercentage(len(clusters[i].Points), len(points))
+					hex := helpers.ConvertToHEX(clusters[i].Center)
+					color := Color{RGB: clusters[i].Center, Hex: hex, Percentage: int(percentage)}
+					colors = append(colors, color)
+				}
+
+				sort.Slice(colors, func(i, j int) bool {
+					return colors[i].Percentage > colors[j].Percentage
+				})
+
+				palette := Palette{Name: file.Filename, Palette: colors}
+				palettes = append(palettes, palette)
+
+				deletion := os.Remove(destination)
+				if deletion != nil {
+					return err
+				}
+			}
 		}
-
-		img, err := helpers.LoadImage(destination)
-		if err != nil {
-			return err
-		}
-
-		resized := helpers.ResizeImage(img, 100)
-		points := helpers.ExtractColors(resized)
-
-		clusters := kmeans.KMeans(points, K, MAX_ITERATIONS)
-
-		palette := make([]Color, 0)
-		for i := range clusters {
-			percentage := helpers.CalculatePercentage(len(clusters[i].Points), len(points))
-			hex := helpers.ConvertToHEX(clusters[i].Center)
-			color := Color{RGB: clusters[i].Center, Hex: hex, Percentage: int(percentage)}
-			palette = append(palette, color)
-		}
-
-		sort.Slice(palette, func(i, j int) bool {
-			return palette[i].Percentage > palette[j].Percentage
-		})
-
-		deletion := os.Remove(destination)
-		if deletion != nil {
-			return err
-		}
-
-		return c.JSON(palette)
+		return c.JSON(palettes)
 	})
 
-	log.Fatal(app.Listen(":5050"))
+	log.Fatal(app.Listen(":8000"))
 }
