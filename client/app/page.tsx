@@ -33,6 +33,7 @@ export default function Home() {
         >
           <iframe
             src="https://www.loom.com/embed/301dcc010d0943bbadcc2947e9b1229e?sid=b28a8c28-5006-4d1d-aa88-73749223d266"
+            allowFullScreen
             style={{
               position: "absolute",
               top: 0,
