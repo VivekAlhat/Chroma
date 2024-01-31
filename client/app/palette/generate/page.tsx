@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useCallback, useState } from "react";
@@ -63,7 +63,11 @@ export default function Page() {
       setPalettes(response.data);
       setIsLoading(false);
     } catch (e) {
-      toast.error((e as Error).message);
+      if ((e as AxiosError).response?.status === 429) {
+        toast.error("You have hit rate limit. Please try again in an hour.");
+      } else {
+        toast.error((e as Error).message);
+      }
     } finally {
       setIsLoading(false);
     }
