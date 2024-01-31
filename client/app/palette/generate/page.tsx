@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { MoveLeft } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
 
 import Palette from "@/components/Palette";
 import Spinner from "@/components/Spinner";
@@ -25,6 +26,10 @@ export default function Page() {
         "Only 3 images are allowed at a time or one of your image exceeds 10MB, Try again";
       toast.error(rejection);
     } else {
+      acceptedFiles = acceptedFiles.map((file) => {
+        const modifiedFile = new File([file], `${uuidv4()}-${file.name}`);
+        return modifiedFile;
+      });
       setUploads(acceptedFiles);
       handleCreatePalette(acceptedFiles);
     }
