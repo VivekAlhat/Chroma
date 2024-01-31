@@ -30,6 +30,7 @@ func main() {
 	app := fiber.New(fiber.Config{
 		BodyLimit: 20 * 1024 * 1024,
 	})
+
 	app.Use(cors.New())
 
 	app.Get("/", func(c *fiber.Ctx) error {
@@ -79,7 +80,7 @@ func main() {
 
 				deletion := os.Remove(destination)
 				if deletion != nil {
-					return err
+					return deletion
 				}
 			}
 		}
