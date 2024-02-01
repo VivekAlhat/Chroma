@@ -31,5 +31,5 @@ func main() {
 
 	app.Post("/upload", handlers.GeneratePalette)
 
-	log.Fatal(app.Listen(":8000"))
+	log.Fatal(app.Listen(":8080"))
 }

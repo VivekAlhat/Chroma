@@ -35,6 +35,11 @@ func GeneratePalette(c *fiber.Ctx) error {
 		for _, file := range headers {
 			colors := make([]Color, 0)
 
+			err := os.MkdirAll("./tmp", os.ModePerm)
+			if err != nil {
+				return err
+			}
+
 			destination := fmt.Sprintf("./tmp/%s", file.Filename)
 			if err := c.SaveFile(file, destination); err != nil {
 				return err
