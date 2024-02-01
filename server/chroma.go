@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/storage/bbolt/v2"
 )
 
 func main() {
@@ -16,12 +17,15 @@ func main() {
 		BodyLimit: 20 * 1024 * 1024,
 	})
 
+	storage := bbolt.New()
+
 	app.Use(cors.New())
 	app.Use(logger.New())
 	app.Use(limiter.New(limiter.Config{
 		Max:               5,
 		Expiration:        60 * time.Minute,
 		LimiterMiddleware: limiter.SlidingWindow{},
+		Storage:           storage,
 	}))
 
 	app.Get("/", func(c *fiber.Ctx) error {
