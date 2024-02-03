@@ -64,7 +64,9 @@ export default function Page() {
       setIsLoading(false);
     } catch (e) {
       if ((e as AxiosError).response?.status === 429) {
-        toast.error("You have hit rate limit. Please try again in an hour.");
+        toast.error(
+          "You have hit rate limit. Please try again after 30 minutes."
+        );
       } else {
         toast.error((e as Error).message);
       }

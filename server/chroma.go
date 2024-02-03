@@ -17,15 +17,20 @@ func main() {
 		BodyLimit: 20 * 1024 * 1024,
 	})
 
-	storage := bbolt.New()
+	storage := bbolt.New(bbolt.Config{
+		Database: "/data/chroma_limiter.db",
+	})
 
 	app.Use(cors.New())
 	app.Use(logger.New())
 	app.Use(limiter.New(limiter.Config{
 		Max:               5,
-		Expiration:        60 * time.Minute,
+		Expiration:        30 * time.Minute,
 		LimiterMiddleware: limiter.SlidingWindow{},
-		Storage:           storage,
+		KeyGenerator: func(c *fiber.Ctx) string {
+			return c.Get("x-forwarded-for")
+		},
+		Storage: storage,
 	}))
 
 	app.Get("/", func(c *fiber.Ctx) error {
