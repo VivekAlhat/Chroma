@@ -14,9 +14,15 @@ dependencies:
   axios:
     specifier: ^1.6.7
     version: 1.6.7
+  color-name-list:
+    specifier: ^10.19.0
+    version: 10.19.0
   lucide-react:
     specifier: ^0.316.0
     version: 0.316.0(react@18.2.0)
+  nearest-color:
+    specifier: ^0.4.4
+    version: 0.4.4
   next:
     specifier: 14.1.0
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -40,6 +46,9 @@ dependencies:
     version: 9.0.1
 
 devDependencies:
+  '@types/nearest-color':
+    specifier: ^0.4.1
+    version: 0.4.1
   '@types/node':
     specifier: ^20.11.9
     version: 20.11.9
@@ -733,6 +742,10 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/nearest-color@0.4.1:
+    resolution: {integrity: sha512-nxe9cdPrS0Gh3FRxDSHyB6Ep3OCCKqqBAYTj0EyT21aInkNESV9Vm0IS+ibeqkycSjadlAHmworjBgqz266S3w==}
+    dev: true
+
   /@types/node@20.11.9:
     resolution: {integrity: sha512-CQXNuMoS/VcoAMISe5pm4JnEd1Br5jildbQEToEMQvutmv+EaQr90ry9raiudgpyDuqFiV9e4rnjSfLNq12M5w==}
     dependencies:
@@ -1160,6 +1173,11 @@ packages:
     dependencies:
       color-name: 1.1.4
     dev: true
+
+  /color-name-list@10.19.0:
+    resolution: {integrity: sha512-3hAY3+BEerIRSZhTlnkGi6UwuYlJC5vIOiblvqrg5xbJdmbTf7LEbEl4n1TX+szNl+PDincSZckO0GXsoiCAdA==}
+    engines: {node: '>=16', npm: '>=8.11.0'}
+    dev: false
 
   /color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
@@ -2414,6 +2432,10 @@ packages:
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
+
+  /nearest-color@0.4.4:
+    resolution: {integrity: sha512-orhcaIORC10tf41Ld2wwlcC+FaAavHG87JHWB3eHH5p7v2k9Tzym2XNEZzLAm5YJwGv6Q38WWc7SOb+Qfu/4NQ==}
+    dev: false
 
   /next@14.1.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==}

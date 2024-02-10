@@ -1,8 +1,18 @@
 import { X } from "lucide-react";
+import nearestColor from "nearest-color";
+import colorNames from "color-name-list";
 import * as Popover from "@radix-ui/react-popover";
+
+import ColorDetails from "./ColorDetails";
 
 export default function ColorInfo({ color }: ColorInfoProps) {
   const { rgb, hex, percentage } = color;
+
+  const colors = colorNames.reduce(
+    (o, { name, hex }) => Object.assign(o, { [name]: hex }),
+    {}
+  );
+  const nearest = nearestColor.from(colors);
 
   return (
     <Popover.Portal>
@@ -17,21 +27,11 @@ export default function ColorInfo({ color }: ColorInfoProps) {
             style={{
               backgroundColor: `rgb(${rgb.R},${rgb.G},${rgb.B})`,
             }}
-          ></div>
-          <div className="flex items-center justify-between">
-            <p className="font-semibold">RGB</p>
-            <p>
-              rgb({rgb.R},{rgb.G},{rgb.B})
-            </p>
-          </div>
-          <div className="flex items-center justify-between">
-            <p className="font-semibold">Hex</p>
-            <p>{hex}</p>
-          </div>
-          <div className="flex items-center justify-between">
-            <p className="font-semibold">Proportion</p>
-            <p>{percentage}%</p>
-          </div>
+          />
+          <ColorDetails name="Name" value={`${nearest(hex)?.name}`} />
+          <ColorDetails name="RGB" value={`rgb(${rgb.R},${rgb.G},${rgb.B})`} />
+          <ColorDetails name="Hex" value={`#${hex}`} />
+          <ColorDetails name="Proportion" value={`${percentage}%`} />
         </div>
         <Popover.Close
           className="rounded-full m-2 h-[18px] w-[18px] inline-flex items-center justify-center absolute top-[5px] right-[5px] outline-none cursor-pointer"

@@ -22,3 +22,8 @@ interface ColorInfoProps {
 interface PaletteProps {
   palette: Palette[];
 }
+
+interface ColorDetailsProps {
+  name: string;
+  value: string;
+}

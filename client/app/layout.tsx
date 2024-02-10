@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 
@@ -32,7 +32,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Toaster />
-	<Analytics />
+        <Analytics />
       </body>
     </html>
   );
