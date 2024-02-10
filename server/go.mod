@@ -3,6 +3,7 @@ module github.com/VivekAlhat/Chroma/server
 go 1.21.5
 
 require (
+	github.com/crazy3lf/colorconv v1.2.0
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/gofiber/storage/bbolt/v2 v2.0.0-20240201073907-3df42f8a8e39
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646

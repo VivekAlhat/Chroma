@@ -3,10 +3,11 @@ package handlers
 import (
 	"fmt"
 	"os"
-	"sort"
+	"strings"
 
 	"github.com/VivekAlhat/Chroma/server/helpers"
 	"github.com/VivekAlhat/Chroma/server/kmeans"
+	"github.com/crazy3lf/colorconv"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -57,14 +58,10 @@ func GeneratePalette(c *fiber.Ctx) error {
 
 			for i := range clusters {
 				percentage := helpers.CalculatePercentage(len(clusters[i].Points), len(points))
-				hex := helpers.ConvertToHEX(clusters[i].Center)
+				hex := strings.Join(strings.Split(colorconv.RGBToHex(uint8(clusters[i].Center.R), uint8(clusters[i].Center.G), uint8(clusters[i].Center.B)), "0x"), "")
 				color := Color{RGB: clusters[i].Center, Hex: hex, Percentage: fmt.Sprintf("%.2f", percentage)}
 				colors = append(colors, color)
 			}
-
-			sort.Slice(colors, func(i, j int) bool {
-				return colors[i].Percentage > colors[j].Percentage
-			})
 
 			palette := Palette{Name: file.Filename, Palette: colors}
 			palettes = append(palettes, palette)
