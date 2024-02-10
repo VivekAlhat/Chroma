@@ -16,7 +16,7 @@ const MAX_ITERATIONS = 500
 type Color struct {
 	RGB        kmeans.Point `json:"rgb"`
 	Hex        string       `json:"hex"`
-	Percentage int          `json:"percentage"`
+	Percentage string       `json:"percentage"`
 }
 
 type Palette struct {
@@ -58,7 +58,7 @@ func GeneratePalette(c *fiber.Ctx) error {
 			for i := range clusters {
 				percentage := helpers.CalculatePercentage(len(clusters[i].Points), len(points))
 				hex := helpers.ConvertToHEX(clusters[i].Center)
-				color := Color{RGB: clusters[i].Center, Hex: hex, Percentage: int(percentage)}
+				color := Color{RGB: clusters[i].Center, Hex: hex, Percentage: fmt.Sprintf("%.2f", percentage)}
 				colors = append(colors, color)
 			}
 

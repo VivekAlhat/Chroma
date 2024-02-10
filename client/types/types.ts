@@ -7,7 +7,7 @@ type RGB = {
 type Palette = {
   rgb: RGB;
   hex: string;
-  percentage: number;
+  percentage: string;
 };
 
 type ColorPalette = {
